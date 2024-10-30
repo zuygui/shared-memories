@@ -1,6 +1,13 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import type { StatusPageRange, StatusPageRenderer } from '@adonisjs/core/types/http'
+import { errors as vineErrors } from '@vinejs/vine'
+
+interface ValidationMessage {
+  message: string
+  rule: string
+  field: string
+}
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -30,6 +37,29 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    if (!ctx.route) {
+      console.error(`Missing route informations`)
+      return
+    }
+    if (!ctx.route.name) {
+      console.error(`Route "${ctx.route.pattern}" is missing a name field`)
+      return
+    }
+
+    if (error instanceof vineErrors.E_VALIDATION_ERROR) {
+      const errorsList = (error.messages as Array<ValidationMessage>).reduce(
+        (accumulator, value: ValidationMessage) => {
+          accumulator[value.field] = value.message
+          return accumulator
+        },
+        {} as Record<string, string>
+      )
+
+      ctx.session.flashErrors(errorsList)
+
+      return ctx.response.redirect().toRoute(ctx.route.name)
+    }
+
     return super.handle(error, ctx)
   }
 

@@ -5,10 +5,10 @@ services:
     ports:
       - '${PG_PORT:-5432}:5432'
     environment:
-      PGPASSWORD: '${PG_PASSWORD:-secret}'
-      POSTGRES_DB: '${PG_DB_NAME:-default}'
-      POSTGRES_USER: '${PG_USER}'
-      POSTGRES_PASSWORD: '${PG_PASSWORD:-secret}'
+      PGPASSWORD: 'password'
+      POSTGRES_DB: 'shared-memories'
+      POSTGRES_USER: 'dev'
+      POSTGRES_PASSWORD: 'password'
     volumes:
       - 'sailpgsql:/var/lib/postgresql/data'
     networks:

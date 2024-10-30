@@ -1,5 +1,6 @@
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
+import { getToastFromSession } from '../extensions/session.js'
 
 const inertiaConfig = defineConfig({
   /**
@@ -11,7 +12,9 @@ const inertiaConfig = defineConfig({
    * Data that should be shared with all rendered pages
    */
   sharedData: {
-    errors: (ctx) => ctx.session?.flashMessages.get('errors'),
+    user: (ctx) => ctx.auth?.user,
+    errors: (ctx) => ctx.session?.flashMessages.get('errorsBag'),
+    flash: (ctx) => getToastFromSession(ctx.session),
   },
 
   /**
