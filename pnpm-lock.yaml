@@ -102,6 +102,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.3
         version: 4.3.3(vite@5.4.10(@types/node@22.8.4))
+      adonis-sail:
+        specifier: ^1.0.0
+        version: 1.0.0(@adonisjs/core@6.14.1(@adonisjs/assembler@7.8.2(typescript@5.6.3))(@vinejs/vine@2.1.0)(edge.js@6.2.0))
       eslint:
         specifier: ^9.12.0
         version: 9.13.0
@@ -1232,6 +1235,11 @@ packages:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  adonis-sail@1.0.0:
+    resolution: {integrity: sha512-g1umX25JdDORr6jJX0RuH6oH08iTvBlqFK6GOZIBlSCg4wbrbVgZnZ6yiGfVpjvlhHmn3ZfspTHO4jRWdkbVvA==}
+    peerDependencies:
+      '@adonisjs/core': ^6.0.0
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
@@ -4714,6 +4722,11 @@ snapshots:
       acorn: 8.14.0
 
   acorn@8.14.0: {}
+
+  adonis-sail@1.0.0(@adonisjs/core@6.14.1(@adonisjs/assembler@7.8.2(typescript@5.6.3))(@vinejs/vine@2.1.0)(edge.js@6.2.0)):
+    dependencies:
+      '@adonisjs/core': 6.14.1(@adonisjs/assembler@7.8.2(typescript@5.6.3))(@vinejs/vine@2.1.0)(edge.js@6.2.0)
+      '@poppinss/utils': 6.8.3
 
   ajv@6.12.6:
     dependencies:
