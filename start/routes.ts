@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import inertia from '@adonisjs/inertia/client'
 
 const LoginController = () => import('../app/controllers/auth/login_controller.js')
 const LogoutController = () => import('../app/controllers/auth/logout_controller.js')
@@ -22,3 +23,8 @@ router
     router.post('/logout', [LogoutController, 'handle']).as('logout')
   })
   .as('auth')
+
+router
+  .on('dashboard')
+  // check if user is authenticated
+  .renderInertia('dashboard')
