@@ -1,6 +1,7 @@
 import { SharedProps } from '@adonisjs/inertia/types'
 import { Head, Link, usePage } from '@inertiajs/react'
 import { ReactElement } from 'react'
+import { DashboardLayout } from '~/layouts/dashboard_layout'
 
 export default function DashboardHome(): ReactElement {
   const { user } = usePage<SharedProps>().props
@@ -29,3 +30,5 @@ export default function DashboardHome(): ReactElement {
     </div>
   )
 }
+
+DashboardHome.layout = (page: ReactElement) => <DashboardLayout>{page}</DashboardLayout>
