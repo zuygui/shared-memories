@@ -28,7 +28,7 @@ router
     router.get('/login', [AuthController, 'login']).as('login')
     router.post('/login', [AuthController, 'loginPost']).as('loginPost')
 
-    router.post('/logout', [AuthController, 'logout']).as('logout')
+    router.get('/logout', [AuthController, 'logout']).as('logout')
   })
   .prefix('auth')
   .as('auth')
