@@ -2,13 +2,16 @@ import { SharedProps } from '@adonisjs/inertia/types'
 import { Link, usePage } from '@inertiajs/react'
 import {
   ChevronDown,
+  LucideCalendar,
   LucideGalleryVerticalEnd,
   LucideHome,
   LucideIcon,
   LucideLogOut,
+  LucideMoon,
+  LucideSun,
 } from 'lucide-react'
-import { PropsWithChildren, ReactElement } from 'react'
-import { Button } from '../ui/button'
+import { PropsWithChildren, ReactElement, useCallback, useMemo } from 'react'
+import { Theme, useTheme } from '../theme_provider'
 import {
   Sidebar,
   SidebarContent,
@@ -36,19 +39,21 @@ function MenuItem({ href, title, exact, icon: Icon, children }: MenuItemProps): 
 
   const active = exact ? url === href : url.startsWith(href)
   return (
-    <SidebarMenuButton asChild isActive={active} variant="default">
-      <Link href={href}>
-        <Icon className="size-5" />
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild isActive={active} variant="default">
+        <Link href={href}>
+          <Icon className="size-5" />
 
-        {state === 'expanded' && (
-          <>
-            {title}
+          {state === 'expanded' && (
+            <>
+              {title}
 
-            {children && <ChevronDown />}
-          </>
-        )}
-      </Link>
-    </SidebarMenuButton>
+              {children && <ChevronDown />}
+            </>
+          )}
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
   )
 }
 
@@ -83,9 +88,8 @@ export function DashboardSidebar(): ReactElement {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <MenuItem href="/dashboard" title="Home" icon={LucideHome} exact />
-              </SidebarMenuItem>
+              <MenuItem href="/dashboard" title="Home" icon={LucideHome} exact />
+              <MenuItem href="/dashboard/events" title="Events" icon={LucideCalendar} />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -94,20 +98,51 @@ export function DashboardSidebar(): ReactElement {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <div className="flex flex-row items-center justify-end px-2">
-                <span className="flex-1">{user.fullName}</span>
-                <Button asChild variant="ghost" size="icon">
-                  <Link href="/auth/logout">
-                    <LucideLogOut className="ml-2 size-5" />
-                    <span className="sr-only">Logout</span>
-                  </Link>
-                </Button>
-              </div>
-            </SidebarMenuButton>
+            <ThemeSwitcher />
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <UserLogout />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
+  )
+}
+
+function UserLogout(): ReactElement {
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton className="flex flex-row items-center justify-end px-2">
+        <span className="flex-1">Logout</span>
+
+        <div className="inline-flex size-10 items-center justify-center">
+          <LucideLogOut className="size-4" />
+          <span className="sr-only">Logout</span>
+        </div>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  )
+}
+
+function ThemeSwitcher(): ReactElement {
+  const { theme, setTheme } = useTheme()
+
+  const toggleTheme = useCallback(() => {
+    setTheme((oldTheme: Theme) => (oldTheme === 'light' ? 'dark' : 'light'))
+  }, [theme, setTheme])
+
+  const LucideIcon = useMemo(() => (theme === 'light' ? LucideSun : LucideMoon), [theme])
+
+  return (
+    <SidebarMenuButton
+      className="flex flex-row items-center justify-end px-2"
+      onClick={toggleTheme}
+    >
+      <span className="flex-1">Theme</span>
+      <div className="inline-flex size-10 items-center justify-center">
+        <LucideIcon className="size-4" />
+        <span className="sr-only">Toggle theme</span>
+      </div>
+    </SidebarMenuButton>
   )
 }
