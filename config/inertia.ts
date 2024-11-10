@@ -1,6 +1,8 @@
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
 import { getToastFromSession } from '../extensions/session.js'
+import type User from '#models/user'
+import { ModelAttributes } from '@adonisjs/lucid/types/model'
 
 const inertiaConfig = defineConfig({
   /**
@@ -22,12 +24,19 @@ const inertiaConfig = defineConfig({
    */
   ssr: {
     enabled: false,
-    entrypoint: 'inertia/app/ssr.tsx'
-  }
+    entrypoint: 'inertia/app/ssr.tsx',
+  },
 })
 
 export default inertiaConfig
 
 declare module '@adonisjs/inertia/types' {
-  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {}
+  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {
+    user: ModelAttributes<User> | null
+    [key: string]: any // This line adds the index signature
+  }
+
+  export type Demo = {
+    [K in keyof SharedProps]: SharedProps[K]
+  } & {}
 }

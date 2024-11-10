@@ -17,7 +17,7 @@ export default function Login() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    post('/login', {})
+    post('/auth/login', {})
   }
 
   return (
@@ -45,12 +45,7 @@ export default function Login() {
                   />
                 </FormControl>
                 <FormControl className="grid gap-2">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <Link href="#" className="ml-auto inline-block text-sm underline">
-                      Forgot your password?
-                    </Link>
-                  </div>
+                  <Label htmlFor="password">Password</Label>
                   <Input
                     id="password"
                     name="password"

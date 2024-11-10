@@ -3,21 +3,40 @@ services:
   pgsql:
     image: 'postgres:15'
     ports:
-      - '${PG_PORT:-5432}:5432'
+      - '${DB_PORT:-5432}:5432'
+    env_file: .env
     environment:
-      PGPASSWORD: 'password'
-      POSTGRES_DB: 'shared-memories'
-      POSTGRES_USER: 'dev'
-      POSTGRES_PASSWORD: 'password'
+      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_DB: '${DB_DATABASE:-default}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     volumes:
       - 'sailpgsql:/var/lib/postgresql/data'
     networks:
       - sail
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "${PG_DB_NAME:-default}", "-U", "${PG_USER}"]
+      test: ['CMD', 'pg_isready', '-q', '-d', '${PG_DB_NAME:-default}', '-U', '${DB_USER}']
       retries: 3
       timeout: 5s
 
+  minio:
+    image: 'minio/minio:latest'
+    ports:
+      - '${MINIO_PORT:-9000}:9000'
+      - '${MINIO_CONSOLE_PORT:-8900}:8900'
+    env_file: .env
+    environment:
+      MINIO_ROOT_USER: 'sail'
+      MINIO_ROOT_PASSWORD: 'password'
+    volumes:
+      - 'sailminio:/data/minio'
+    networks:
+      - sail
+    command: minio server /data/minio --console-address ":8900"
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      retries: 3
+      timeout: 5s
 
 networks:
   sail:
@@ -25,3 +44,4 @@ networks:
 
 volumes:
   sailpgsql:
+  sailminio:

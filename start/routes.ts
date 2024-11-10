@@ -7,24 +7,28 @@
 |
 */
 
+import { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
-import inertia from '@adonisjs/inertia/client'
+import { middleware } from './kernel.js'
 
-const LoginController = () => import('../app/controllers/auth/login_controller.js')
-const LogoutController = () => import('../app/controllers/auth/logout_controller.js')
+const AuthController = () => import('../app/controllers/auth_controller.js')
 
-router.on('/').renderInertia('home')
+router.get('/', ({ response }: HttpContext) => response.redirect().toRoute('dashboard.home'))
 
 router
   .group(() => {
-    router.get('/login', [LoginController, 'show']).as('login.show')
-    router.post('/login', [LoginController, 'store']).as('login.store')
-
-    router.post('/logout', [LogoutController, 'handle']).as('logout')
+    router.on('/').renderInertia('dashboard/home').as('home')
   })
-  .as('auth')
+  .middleware(middleware.auth())
+  .prefix('/dashboard')
+  .as('dashboard')
 
 router
-  .on('dashboard')
-  // check if user is authenticated
-  .renderInertia('dashboard')
+  .group(() => {
+    router.get('/login', [AuthController, 'login']).as('login')
+    router.post('/login', [AuthController, 'loginPost']).as('loginPost')
+
+    router.post('/logout', [AuthController, 'logout']).as('logout')
+  })
+  .prefix('/auth')
+  .as('auth')
