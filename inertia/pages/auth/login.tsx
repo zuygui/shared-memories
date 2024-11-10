@@ -1,16 +1,13 @@
-import hash from '@adonisjs/core/services/hash'
-import { Head, Link, useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { FormEvent } from 'react'
 import { FormControl } from '~/components/form'
-// import { ThemeToggle } from "~/components/theme_toggle"
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-// import { useForm } from '~/lib/form'
 
 export default function Login() {
-  const { data, setData, processing, errors, post } = useForm({
+  const { data, setData, processing, post } = useForm({
     email: '',
     password: '',
   })
@@ -23,7 +20,7 @@ export default function Login() {
   return (
     <>
       <Head title="Login" />
-      <div className="flex h-screen w-full items-center justify-center px-4 bg-background dark:bg-background">
+      <div className="flex h-screen w-full items-center justify-center bg-background px-4 dark:bg-background">
         <Card className="mx-auto max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>

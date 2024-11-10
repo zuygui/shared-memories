@@ -1,6 +1,7 @@
 {
   "extends": "@adonisjs/tsconfig/tsconfig.client.json",
   "compilerOptions": {
+    "strict": true,
     "baseUrl": ".",
     "module": "ESNext",
     "jsx": "react-jsx",

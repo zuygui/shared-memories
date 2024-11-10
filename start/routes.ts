@@ -20,7 +20,7 @@ router
     router.on('/').renderInertia('dashboard/home').as('home')
   })
   .middleware(middleware.auth())
-  .prefix('/dashboard')
+  .prefix('dashboard')
   .as('dashboard')
 
 router
@@ -30,5 +30,5 @@ router
 
     router.post('/logout', [AuthController, 'logout']).as('logout')
   })
-  .prefix('/auth')
+  .prefix('auth')
   .as('auth')

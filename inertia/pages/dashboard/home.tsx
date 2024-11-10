@@ -1,12 +1,12 @@
+import { SharedProps } from '@adonisjs/inertia/types'
 import { Head, Link, usePage } from '@inertiajs/react'
-import { Demo, SharedProps } from '@adonisjs/inertia/types'
 import { ReactElement } from 'react'
 
 export default function DashboardHome(): ReactElement {
   const { user } = usePage<SharedProps>().props
 
   if (!user) {
-    return <>Loading...</>
+    return <span>Loading...</span>
   }
 
   return (
@@ -22,9 +22,7 @@ export default function DashboardHome(): ReactElement {
             <Link href="/settings">Settings</Link>
           </li>
           <li>
-            <Link href="/auth/logout" method="post">
-              Logout
-            </Link>
+            <Link href="/auth/logout">Logout</Link>
           </li>
         </ul>
       </nav>

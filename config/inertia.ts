@@ -35,8 +35,4 @@ declare module '@adonisjs/inertia/types' {
     user: ModelAttributes<User> | null
     [key: string]: any // This line adds the index signature
   }
-
-  export type Demo = {
-    [K in keyof SharedProps]: SharedProps[K]
-  } & {}
 }
