@@ -94,15 +94,17 @@ export function DashboardSidebar(): ReactElement {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex flex-row items-center px-2">
-              <span className="flex-1">{user.fullName}</span>
-              <Button asChild variant="ghost" size="icon">
-                <Link href="/auth/logout">
-                  <LucideLogOut className="ml-2 size-5" />
-                  <span className="sr-only">Logout</span>
-                </Link>
-              </Button>
-            </div>
+            <SidebarMenuButton asChild>
+              <div className="flex flex-row items-center justify-end px-2">
+                <span className="flex-1">{user.fullName}</span>
+                <Button asChild variant="ghost" size="icon">
+                  <Link href="/auth/logout">
+                    <LucideLogOut className="ml-2 size-5" />
+                    <span className="sr-only">Logout</span>
+                  </Link>
+                </Button>
+              </div>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
