@@ -111,16 +111,14 @@ export function DashboardSidebar(): ReactElement {
 
 function UserLogout(): ReactElement {
   return (
-    <SidebarMenuItem>
-      <SidebarMenuButton className="flex flex-row items-center justify-end px-2">
-        <span className="flex-1">Logout</span>
+    <SidebarMenuButton className="flex flex-row items-center justify-end px-2">
+      <span className="flex-1">Logout</span>
 
-        <div className="inline-flex size-10 items-center justify-center">
-          <LucideLogOut className="size-4" />
-          <span className="sr-only">Logout</span>
-        </div>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
+      <div className="inline-flex size-10 items-center justify-center">
+        <LucideLogOut className="size-4" />
+        <span className="sr-only">Logout</span>
+      </div>
+    </SidebarMenuButton>
   )
 }
 

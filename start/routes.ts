@@ -12,12 +12,20 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
 const AuthController = () => import('../app/controllers/auth_controller.js')
+const EventsController = () => import('../app/controllers/events_controller.js')
 
 router.get('/', ({ response }: HttpContext) => response.redirect().toRoute('dashboard.home'))
 
 router
   .group(() => {
     router.on('/').renderInertia('dashboard/home').as('home')
+
+    router
+      .group(() => {
+        router.get('/', [EventsController, 'list']).as('events')
+      })
+      .as('events')
+      .prefix('events')
   })
   .middleware(middleware.auth())
   .prefix('dashboard')

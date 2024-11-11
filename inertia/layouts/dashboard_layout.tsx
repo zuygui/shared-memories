@@ -5,11 +5,11 @@ import { Button } from '~/components/ui/button'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar'
 import { DefaultLayout } from './default_layout'
 
-export function DashboardLayout(props: PropsWithChildren): ReactElement {
+export function DashboardLayout(props: PropsWithChildren<{ title: string }>): ReactElement {
   return (
     <DefaultLayout>
       <SidebarProvider>
-        <div className="flex h-screen flex-row overflow-hidden">
+        <div className="flex h-screen w-full flex-row overflow-hidden">
           <DashboardSidebar />
           <SidebarInset className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             <header>
@@ -19,7 +19,7 @@ export function DashboardLayout(props: PropsWithChildren): ReactElement {
                     <Button asChild variant="ghost" size="icon">
                       <SidebarTrigger />
                     </Button>
-                    <h1 className="text-2xl font-semibold">Dashboard</h1>
+                    <h1 className="text-2xl font-semibold">{props.title}</h1>
                   </div>
                 </div>
               </div>

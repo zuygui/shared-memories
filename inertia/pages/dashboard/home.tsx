@@ -13,7 +13,7 @@ export default function DashboardHome(): ReactElement {
   return (
     <div>
       <Head title="Dashboard" />
-      <h1>Welcome to your Dashboard, {user.fullName}!</h1>
+      <h2 className="mb-2 text-2xl font-semibold">Welcome to your Dashboard, {user.fullName}!</h2>
       <nav>
         <ul>
           <li>
@@ -31,4 +31,6 @@ export default function DashboardHome(): ReactElement {
   )
 }
 
-DashboardHome.layout = (page: ReactElement) => <DashboardLayout>{page}</DashboardLayout>
+DashboardHome.layout = (page: ReactElement) => (
+  <DashboardLayout title="Home">{page}</DashboardLayout>
+)
